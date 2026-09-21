@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Sebastián Cumple 5 Años! 🏎️ Gran Carrera Cars</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Bebas+Neue&family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mcqueenRed: '#e60012',
+                        lightningYellow: '#ffcc00',
+                        raceDark: '#111111',
+                        asphaltGray: '#222222',
+                        pistonGold: '#ffd700',
+                        rustezeOrange: '#ff6600',
+                    },
+                    fontFamily: {
+                        racing: ['Titan One', 'cursive'],
+                        speed: ['Bebas Neue', 'sans-serif'],
+                        body: ['Montserrat', 'sans-serif'],
+                    },
+                    animation: {
+                        'vibrate': 'vibrate 0.2s infinite',
+                        'rev-engine': 'rev 1s ease-in-out infinite alternate',
+                        'speed-light': 'speedLight 0.8s linear infinite',
+                    },
+                    keyframes: {
+                        vibrate: {
+                            '0%, 100%': { transform: 'translate(0, 0)' },
+                            '25%': { transform: 'translate(-2px, 2px)' },
+                            '75%': { transform: 'translate(2px, -2px)' },
+                        },
+                        rev: {
+                            '0%': { transform: 'scale(1) rotate(0deg)' },
+                            '100%': { transform: 'scale(1.03) rotate(1deg)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #111111;
+            color: #FFFFFF;
+            overflow-x: hidden;
+        }
+        
+        /* Pattern de Bandera a Cuadros */
+        .checkered-pattern {
+            background-color: #ffffff;
+            background-image: 
+                linear-gradient(45deg, #111 25%, transparent 25%), 
+                linear-gradient(-45deg, #111 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #111 75%), 
+                linear-gradient(-45deg, transparent 75%, #111 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+
+        .racing-border {
+            border-image: linear-gradient(to right, #e60012, #ffcc00, #e60012) 1;
+        }
+
+        .glass-card-racing {
+            background: rgba(30, 30, 30, 0.85);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 204, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(230, 0, 18, 0.2);
+        }
+
+        .btn-racing {
+            transition: all 0.15s ease;
+            box-shadow: 0 6px 0px #99000c;
+        }
+        .btn-racing:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0px #99000c;
+        }
+
+        .text-stroke-black {
+            -webkit-text-stroke: 2px #000000;
+        }
+        
+        .text-stroke-yellow {
+            -webkit-text-stroke: 1.5px #ffcc00;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111111;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e60012;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-white relative bg-asphaltGray">
+
+    <!-- TOP CHECKERED BANNER -->
+    <div class="h-6 checkered-pattern w-full shadow-md"></div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="max-w-4xl mx-auto px-4 py-6 relative z-10">
+
+        <!-- Header Category Badge -->
+        <div class="text-center mb-4">
+            <span class="inline-block bg-mcqueenRed text-lightningYellow border-2 border-lightningYellow px-6 py-1.5 rounded-full font-speed text-xl md:text-2xl tracking-widest uppercase shadow-2xl animate-pulse">
+                ⚡ COPA PISTON RADIADOR SPRINGS • EDICIÓN #95 ⚡
+            </span>
+        </div>
+
+        <!-- HERO SECTION WITH LIGHTNING MCQUEEN -->
+        <header class="text-center my-4 relative">
+            <div class="relative inline-block w-full">
+                <h1 class="font-racing text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-mcqueenRed text-stroke-black drop-shadow-[0_6px_0px_#ffcc00] leading-none uppercase">
+                    ¡COMIENZA LA GRAN CARRERA!
+                </h1>
+                
+                <!-- Lightning Badge 95 -->
+                <div class="mt-2 flex justify-center items-center gap-3">
+                    <span class="font-speed text-3xl md:text-5xl text-lightningYellow tracking-wider">SEBASTIÁN CUMPLE</span>
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-mcqueenRed border-4 border-lightningYellow rounded-2xl rotate-3 flex items-center justify-center shadow-2xl animate-rev-engine">
+                        <span class="font-racing text-4xl md:text-5xl text-lightningYellow italic drop-shadow-[0_2px_0px_#000]">5</span>
+                    </div>
+                    <span class="font-speed text-3xl md:text-5xl text-lightningYellow tracking-wider">AÑOS</span>
+                </div>
+            </div>
+
+            <!-- Lightning McQueen Support Image -->
+            <div class="relative my-6 max-w-2xl mx-auto group">
+                <div class="absolute inset-0 bg-gradient-to-r from-mcqueenRed/30 via-lightningYellow/20 to-mcqueenRed/30 rounded-3xl filter blur-xl"></div>
+                <img src="rAYO.png" alt="Rayo McQueen #95 a toda velocidad" 
+                     class="relative z-10 w-full h-auto rounded-3xl shadow-2xl border-4 border-lightningYellow transform hover:scale-[1.02] transition-transform duration-300 object-cover">
+                
+                <!-- Number 95 Decal -->
+                <div class="absolute -bottom-4 -right-2 z-20 bg-mcqueenRed text-lightningYellow font-racing text-3xl md:text-5xl px-5 py-2 rounded-2xl border-4 border-black rotate-6 shadow-2xl">
+                    95⚡
+                </div>
+            </div>
+
+            <p class="mt-4 text-lg md:text-2xl text-gray-200 font-extrabold max-w-xl mx-auto italic">
+                "¡Cuchao! Enciende tus motores y únete a los Pits para celebrar la carrera más emocionante del año." 🏎️🏁
+            </p>
+
+            <!-- Interactive Engine Sound & Confetti Button -->
+            <button onclick="revEngineAndConfetti()" class="mt-6 bg-gradient-to-r from-mcqueenRed via-rustezeOrange to-mcqueenRed hover:brightness-110 text-lightningYellow font-racing py-4 px-8 rounded-2xl text-xl md:text-2xl shadow-xl border-2 border-lightningYellow btn-racing flex items-center gap-3 mx-auto uppercase">
+                <i class="fa-solid fa-gauge-high text-2xl animate-vibrate"></i> ¡Acelerar a Fondo y Confeti! 🏎️💥
+            </button>
+        </header>
+
+        <!-- TRAFFIC LIGHT COUNTDOWN TIMER -->
+        <section class="my-10 glass-card-racing rounded-3xl p-6 md:p-8 text-center relative overflow-hidden border-2 border-lightningYellow">
+            <h2 class="font-racing text-2xl md:text-3xl text-lightningYellow mb-6 flex items-center justify-center gap-3">
+                <i class="fa-solid fa-traffic-light text-mcqueenRed animate-bounce"></i> SEMÁFORO DE SALIDA
+            </h2>
+
+            <!-- Traffic Light Frame Container -->
+            <div class="bg-black/90 p-6 rounded-3xl border-4 border-yellow-500 max-w-2xl mx-auto shadow-2xl">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <!-- Red Light / Days -->
+                    <div class="bg-asphaltGray/90 p-4 rounded-2xl border-2 border-red-600 flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-red-600 shadow-[0_0_15px_#e60012] mb-2 animate-pulse"></div>
+                        <span id="days" class="font-speed text-5xl md:text-6xl text-white tracking-wider">00</span>
+                        <span class="text-xs text-red-400 font-bold tracking-widest uppercase">Días</span>
+                    </div>
+
+                    <!-- Yellow Light / Hours -->
+                    <div class="bg-asphaltGray/90 p-4 rounded-2xl border-2 border-yellow-500 flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-yellow-400 shadow-[0_0_15px_#ffcc00] mb-2 animate-pulse"></div>
+                        <span id="hours" class="font-speed text-5xl md:text-6xl text-lightningYellow tracking-wider">00</span>
+                        <span class="text-xs text-yellow-400 font-bold tracking-widest uppercase">Horas</span>
+                    </div>
+
+                    <!-- Green Light / Minutes -->
+                    <div class="bg-asphaltGray/90 p-4 rounded-2xl border-2 border-green-500 flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-green-500 shadow-[0_0_15px_#06d6a0] mb-2 animate-pulse"></div>
+                        <span id="minutes" class="font-speed text-5xl md:text-6xl text-green-400 tracking-wider">00</span>
+                        <span class="text-xs text-green-400 font-bold tracking-widest uppercase">Minutos</span>
+                    </div>
+
+                    <!-- Finish Flag / Seconds -->
+                    <div class="bg-asphaltGray/90 p-4 rounded-2xl border-2 border-white flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-white shadow-[0_0_15px_#ffffff] mb-2 flex items-center justify-center text-black font-bold text-xs">🏁</div>
+                        <span id="seconds" class="font-speed text-5xl md:text-6xl text-white tracking-wider">00</span>
+                        <span class="text-xs text-gray-300 font-bold tracking-widest uppercase">Segundos</span>
+                    </div>
+                </div>
+            </div>
+            <p class="text-xs text-yellow-300 font-bold mt-4 uppercase tracking-widest">⚠️ Prepara tu motor para la bandera verde</p>
+        </section>
+
+        <!-- PIT STOP DETAILS (Ficha Técnica) -->
+        <section class="my-10">
+            <h2 class="font-racing text-3xl md:text-4xl text-center text-white mb-8 drop-shadow-[0_3px_0px_#e60012]">
+                🏁 PIT STOP: DETALLES DE LA PISTA
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Date Card -->
+                <div class="glass-card-racing rounded-3xl p-6 text-center transform hover:scale-105 transition-all duration-300 border-t-8 border-mcqueenRed">
+                    <div class="w-16 h-16 bg-mcqueenRed/20 text-mcqueenRed border-2 border-mcqueenRed rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl">
+                        <i class="fa-solid fa-flag-checkered"></i>
+                    </div>
+                    <h3 class="font-speed text-2xl text-lightningYellow tracking-wider mb-1">FECHA DE ARRANQUE</h3>
+                    <p class="text-2xl font-black">Sábado</p>
+                    <p class="text-lg text-gray-200">03 de Octubre, 2026</p>
+                </div>
+
+                <!-- Time Card -->
+                <div class="glass-card-racing rounded-3xl p-6 text-center transform hover:scale-105 transition-all duration-300 border-t-8 border-lightningYellow">
+                    <div class="w-16 h-16 bg-lightningYellow/20 text-lightningYellow border-2 border-lightningYellow rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl">
+                        <i class="fa-solid fa-stopwatch"></i>
+                    </div>
+                    <h3 class="font-speed text-2xl text-lightningYellow tracking-wider mb-1">HORA DE PITS</h3>
+                    <p class="text-3xl font-black text-mcqueenRed">04:00 PM</p>
+                    <p class="text-sm text-gray-300">¡Banderazo inicial puntual!</p>
+                </div>
+
+                <!-- Location Card -->
+                <div class="glass-card-racing rounded-3xl p-6 text-center transform hover:scale-105 transition-all duration-300 border-t-8 border-green-500">
+                    <div class="w-16 h-16 bg-green-500/20 text-green-400 border-2 border-green-500 rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                    </div>
+                    <h3 class="font-speed text-2xl text-lightningYellow tracking-wider mb-1">PISTA DE CARRERAS</h3>
+                    <p class="text-lg font-bold leading-snug">Salón Social Altos del Parque</p>
+                    <p class="text-xs text-gray-300 mt-1">Calle 66 # 1-30 Apto: 5-304. Cali</p>
+                    
+                    <button onclick="openMap()" class="mt-4 bg-green-500 hover:bg-green-600 text-black font-racing py-2 px-4 rounded-xl text-sm btn-racing w-full flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-location-arrow"></i> Navegar a la Pista
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PITS DE ENTRETENIMIENTO (MINIJUEGOS INTERACTIVOS) -->
+        <section class="my-12 glass-card-racing rounded-3xl p-6 md:p-8 border-2 border-lightningYellow text-center relative">
+            <div class="inline-block bg-lightningYellow text-black font-racing text-xs px-4 py-1 rounded-full mb-3 uppercase tracking-wider">
+                🏆 MINI-PITS DIVERSIÓN
+            </div>
+            <h2 class="font-racing text-3xl text-mcqueenRed mb-1">¡PITS DE ENTRETENIMIENTO!</h2>
+            <p class="text-gray-300 text-sm mb-6">Demuestra que eres el piloto más rápido preparando el auto de Sebastián.</p>
+
+            <!-- Mini-Game Selector Tabs -->
+            <div class="flex justify-center gap-3 mb-6">
+                <button id="btn-speed-tab" onclick="switchCarsGame('speed')" class="bg-mcqueenRed text-lightningYellow font-speed text-xl px-5 py-2 rounded-xl border border-lightningYellow btn-racing">
+                    🏎️ Acelera el #95
+                </button>
+                <button id="btn-tires-tab" onclick="switchCarsGame('tires')" class="bg-asphaltGray text-white font-speed text-xl px-5 py-2 rounded-xl border border-gray-600 btn-racing">
+                    🛞 Cambio de Llantas Express
+                </button>
+            </div>
+
+            <!-- GAME 1: Speedometer Accelerator -->
+            <div id="game-speed" class="flex flex-col items-center justify-center min-h-[220px]">
+                <div onclick="accelerateMcqueen()" class="cursor-pointer transition-transform duration-100 transform active:scale-90 select-none relative group">
+                    <div class="text-7xl md:text-8xl filter drop-shadow-[0_10px_10px_rgba(230,0,18,0.5)] animate-rev-engine">
+                        🏎️
+                    </div>
+                    <span class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-mcqueenRed text-lightningYellow font-racing text-xs px-3 py-1 rounded-full border border-lightningYellow whitespace-nowrap">
+                        ¡PRESIONA PARA ACELERAR!
+                    </span>
+                </div>
+                
+                <!-- Speedometer Bar -->
+                <div class="w-full max-w-md bg-black/80 rounded-full h-6 mt-8 border-2 border-lightningYellow overflow-hidden relative">
+                    <div id="speed-bar" class="bg-gradient-to-r from-yellow-400 via-orange-500 to-mcqueenRed h-full w-0 transition-all duration-150"></div>
+                    <span id="speed-text" class="absolute inset-0 flex items-center justify-center font-speed text-sm text-white tracking-widest drop-shadow-[0_2px_2px_#000]">
+                        0 KM/H
+                    </span>
+                </div>
+                <p id="rpm-status" class="text-xs text-yellow-300 font-bold mt-2">¡Llega a 200 KM/H para ganar la Copa Piston!</p>
+            </div>
+
+            <!-- GAME 2: Tire Change Express -->
+            <div id="game-tires" class="hidden flex flex-col items-center justify-center min-h-[220px]">
+                <p class="text-xs text-lightningYellow mb-4 font-bold">¡Haz clic en las 4 llantas gastadas para cambiarlas al estilo Luigi & Guido!</p>
+                <div class="grid grid-cols-2 gap-6 my-2">
+                    <button onclick="changeTire(this)" class="tire-btn text-5xl md:text-6xl p-3 bg-asphaltGray rounded-full border-4 border-dashed border-yellow-500 hover:rotate-45 transition-transform active:scale-75">⚙️</button>
+                    <button onclick="changeTire(this)" class="tire-btn text-5xl md:text-6xl p-3 bg-asphaltGray rounded-full border-4 border-dashed border-yellow-500 hover:rotate-45 transition-transform active:scale-75">⚙️</button>
+                    <button onclick="changeTire(this)" class="tire-btn text-5xl md:text-6xl p-3 bg-asphaltGray rounded-full border-4 border-dashed border-yellow-500 hover:rotate-45 transition-transform active:scale-75">⚙️</button>
+                    <button onclick="changeTire(this)" class="tire-btn text-5xl md:text-6xl p-3 bg-asphaltGray rounded-full border-4 border-dashed border-yellow-500 hover:rotate-45 transition-transform active:scale-75">⚙️</button>
+                </div>
+            </div>
+
+            <!-- Score and Trophy Bar -->
+            <div class="mt-6 pt-4 border-t border-white/10 flex justify-between items-center text-sm font-speed text-lightningYellow">
+                <span class="text-xl">TROFEOS: <span id="trophy-count" class="text-white font-racing text-2xl">0 🏆</span></span>
+                <button onclick="resetCarsGames()" class="text-xs text-gray-400 hover:text-white underline">Reiniciar Pits</button>
+            </div>
+        </section>
+
+        <!-- PADDOCK POLL (Encuesta de Pista/Música) -->
+        <section class="my-10 glass-card-racing rounded-3xl p-6 md:p-8">
+            <h2 class="font-racing text-2xl md:text-3xl text-lightningYellow mb-2 text-center">
+                📻 RADIO PADDOCK RADIADOR SPRINGS
+            </h2>
+            <p class="text-center text-gray-300 text-sm mb-6">Vota por la música o canción de carreras que no puede faltar:</p>
+
+            <div id="paddock-poll" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Poll Option 1 -->
+                <button onclick="voteCarsSong(1)" class="p-4 bg-black/60 hover:bg-black/90 rounded-2xl border-2 border-mcqueenRed text-left flex flex-col justify-between btn-racing group">
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl">🎸</span>
+                        <span id="cars-poll-1" class="font-speed text-lightningYellow text-lg">18 Votos</span>
+                    </div>
+                    <span class="font-bold text-white mt-2 group-hover:text-lightningYellow">"Life is a Highway"</span>
+                </button>
+
+                <!-- Poll Option 2 -->
+                <button onclick="voteCarsSong(2)" class="p-4 bg-black/60 hover:bg-black/90 rounded-2xl border-2 border-lightningYellow text-left flex flex-col justify-between btn-racing group">
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl">⚡</span>
+                        <span id="cars-poll-2" class="font-speed text-lightningYellow text-lg">12 Votos</span>
+                    </div>
+                    <span class="font-bold text-white mt-2 group-hover:text-lightningYellow">"Real Gone" (Sheryl Crow)</span>
+                </button>
+
+                <!-- Poll Option 3 -->
+                <button onclick="voteCarsSong(3)" class="p-4 bg-black/60 hover:bg-black/90 rounded-2xl border-2 border-green-500 text-left flex flex-col justify-between btn-racing group">
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl">🎺</span>
+                        <span id="cars-poll-3" class="font-speed text-lightningYellow text-lg">24 Votos</span>
+                    </div>
+                    <span class="font-bold text-white mt-2 group-hover:text-lightningYellow">"Route 66" (Rock Version)</span>
+                </button>
+            </div>
+            <p id="poll-cars-status" class="text-center text-green-400 text-xs mt-3 font-bold hidden">¡Voto registrado en el Pit Wall!</p>
+        </section>
+
+        <!-- RSVP FORM (Registro de Pilotos) -->
+        <section id="rsvp-section" class="my-10 glass-card-racing rounded-3xl p-6 md:p-10 border-4 border-mcqueenRed relative overflow-hidden">
+            <div class="text-center mb-8">
+                <span class="bg-lightningYellow text-black font-racing text-xs px-4 py-1 rounded-full uppercase tracking-wider">REGISTRO OFICIAL</span>
+                <h2 class="font-racing text-3xl md:text-5xl text-white mt-2 text-stroke-black">REGISTRO DE PILOTOS</h2>
+                <p class="text-gray-300 text-sm md:text-base mt-1">Confirma tu asistencia en el Paddock antes del 5 de Octubre.</p>
+            </div>
+
+            <!-- Form -->
+            <form id="rsvp-cars-form" onsubmit="handleCarsRSVP(event)" class="space-y-4 max-w-lg mx-auto">
+                <div>
+                    <label class="block font-speed text-xl text-lightningYellow mb-1 tracking-wider">Nombre del Piloto Principal / Escudería:</label>
+                    <input type="text" id="pilot-name" required placeholder="Ej: Escudería Rodríguez / Rayo Ramírez" 
+                           class="w-full bg-asphaltGray border-2 border-lightningYellow/50 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-lightningYellow font-bold">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-speed text-xl text-lightningYellow mb-1 tracking-wider">Adultos en Pits:</label>
+                        <select id="adults-cars" class="w-full bg-asphaltGray border-2 border-lightningYellow/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-lightningYellow font-bold">
+                            <option value="1">1 Adulto</option>
+                            <option value="2" selected>2 Adultos</option>
+                            <option value="3">3 Adultos</option>
+                            <option value="4">+4 Adultos</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block font-speed text-xl text-lightningYellow mb-1 tracking-wider">Pequeños Pilotos (Niños):</label>
+                        <select id="kids-cars" class="w-full bg-asphaltGray border-2 border-lightningYellow/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-lightningYellow font-bold">
+                            <option value="0">0 Niños</option>
+                            <option value="1" selected>1 Pequeño Piloto</option>
+                            <option value="2">2 Pequeños Pilotos</option>
+                            <option value="3">3 Pequeños Pilotos</option>
+                            <option value="4">+4 Pequeños Pilotos</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-speed text-xl text-lightningYellow mb-1 tracking-wider">Combustible Especial / Alergias / Notas:</label>
+                    <textarea id="notes-cars" rows="2" placeholder="Ej: Sin lactosa / ¡Listos con nuestros trajes de carrera!" 
+                              class="w-full bg-asphaltGray border-2 border-lightningYellow/50 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-lightningYellow font-bold"></textarea>
+                </div>
+
+                <button id="submit-btn" type="submit" class="w-full bg-gradient-to-r from-mcqueenRed via-rustezeOrange to-mcqueenRed text-lightningYellow font-racing text-2xl py-4 rounded-2xl btn-racing border-2 border-lightningYellow shadow-2xl hover:brightness-110 flex items-center justify-center gap-3 mt-4">
+                    <i class="fa-solid fa-flag-checkered text-3xl"></i> CONFIRMAR MI LUGAR EN LA PISTA
+                </button>
+            </form>
+
+            <!-- Success Message (Checkered Flag) -->
+            <div id="rsvp-cars-success" class="hidden text-center py-8 space-y-4">
+                <div class="w-24 h-24 bg-lightningYellow text-black border-4 border-black rounded-full flex items-center justify-center text-5xl mx-auto animate-bounce shadow-2xl">
+                    🏁
+                </div>
+                <h3 class="font-racing text-3xl md:text-4xl text-lightningYellow">¡LUGAR CONFIRMADO EN LA PARRILLA! 🎉</h3>
+                <p id="success-cars-text" class="text-lg text-gray-200 max-w-md mx-auto font-bold">
+                    ¡Cuchao! Ya quedaste registrado para acelerar junto a Sebastián en su cumpleaños #5.
+                </p>
+                <div class="p-4 bg-asphaltGray rounded-2xl inline-block text-left text-sm text-gray-200 border-2 border-lightningYellow/40">
+                    <p class="font-speed text-lg text-lightningYellow">📌 TICKET DE ENTRADA AL PADDOCK:</p>
+                    <p>🏎️ <strong>Fecha:</strong> Sábado 03 de Octubre, 2026 - 04:00 PM</p>
+                    <p>📍 <strong>Pista:</strong> Salón Social Altos del Parque (Calle 66 # 1-30 Apto: 5-304. Cali)</p>
+                </div>
+                <div class="pt-4">
+                    <button onclick="resetCarsRSVP()" class="text-xs text-lightningYellow underline font-bold">Editar respuesta de piloto</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER & SPONSORS -->
+        <footer class="mt-16 text-center text-gray-400 text-sm pb-8 border-t border-white/10 pt-6">
+            <p class="font-racing text-lightningYellow text-xl mb-1">¡NOS VEMOS EN LA LÍNEA DE META!</p>
+            <p class="text-xs text-gray-400">Inspirado en Cars de Pixar • Misión Cumpleaños #5 de Sebastián ⚡</p>
+            <div class="mt-4 flex justify-center gap-4 text-2xl text-gray-500">
+                <span>🏆</span>
+                <span>🏎️</span>
+                <span>🛞</span>
+                <span>🌵</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // Enlace de Google Apps Script para guardar directo en la hoja de cálculo
+        const GOOGLE_SCRIPT_URL = "TU_GOOGLE_APPS_SCRIPT_URL_AQUI";
+
+        // Cars Interactive Variables
+        let currentKmSpeed = 0;
+        let trophyCount = 0;
+        let tiresChanged = 0;
+        let carsPollVoted = false;
+
+        // Date Set (October 03, 2026 16:00:00)
+        const targetRaceDate = new Date("2026-10-03T16:00:00").getTime();
+
+        function updateTrafficLightCountdown() {
+            const now = new Date().getTime();
+            const distance = targetRaceDate - now;
+
+            if (distance < 0) {
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days < 10 ? '0' + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? '0' + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? '0' + seconds : seconds;
+        }
+
+        setInterval(updateTrafficLightCountdown, 1000);
+        updateTrafficLightCountdown();
+
+        function revEngineAndConfetti() {
+            confetti({
+                particleCount: 120,
+                spread: 80,
+                origin: { y: 0.6 },
+                colors: ['#e60012', '#ffcc00', '#ff6600', '#ffffff']
+            });
+        }
+
+        function launchPistonCupConfetti() {
+            const duration = 2.5 * 1000;
+            const animationEnd = Date.now() + duration;
+
+            (function frame() {
+                const timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return;
+
+                confetti({
+                    particleCount: 7,
+                    angle: 60,
+                    spread: 60,
+                    origin: { x: 0 },
+                    colors: ['#e60012', '#ffcc00', '#ffd700']
+                });
+                confetti({
+                    particleCount: 7,
+                    angle: 120,
+                    spread: 60,
+                    origin: { x: 1 },
+                    colors: ['#e60012', '#ffcc00', '#ffd700']
+                });
+
+                requestAnimationFrame(frame);
+            }());
+        }
+
+        function accelerateMcqueen() {
+            if (currentKmSpeed >= 200) return;
+
+            currentKmSpeed += 25;
+            if (currentKmSpeed > 200) currentKmSpeed = 200;
+
+            const speedPercentage = (currentKmSpeed / 200) * 100;
+            document.getElementById('speed-bar').style.width = speedPercentage + '%';
+            document.getElementById('speed-text').innerText = `${currentKmSpeed} KM/H`;
+
+            if (currentKmSpeed < 100) {
+                document.getElementById('rpm-status').innerText = "¡Sigue acelerando! Calentando motores 🔥";
+            } else if (currentKmSpeed < 200) {
+                document.getElementById('rpm-status').innerText = "¡A toda velocidad en la recta principal! 🏎️💨";
+            } else {
+                document.getElementById('rpm-status').innerText = "🏆 ¡GANASTE LA COPA PISTON! ¡CUCHAO!";
+                trophyCount += 1;
+                document.getElementById('trophy-count').innerText = `${trophyCount} 🏆`;
+                launchPistonCupConfetti();
+            }
+        }
+
+        function changeTire(btn) {
+            if (btn.innerText === '🛞') return;
+
+            btn.innerText = '🛞';
+            btn.classList.remove('border-dashed', 'border-yellow-500');
+            btn.classList.add('border-solid', 'border-green-500', 'bg-green-950');
+
+            tiresChanged++;
+
+            confetti({
+                particleCount: 15,
+                spread: 40,
+                origin: { y: 0.6 }
+            });
+
+            if (tiresChanged === 4) {
+                trophyCount += 1;
+                document.getElementById('trophy-count').innerText = `${trophyCount} 🏆`;
+                setTimeout(() => {
+                    alert("¡Pit Stop Récord al estilo Luigi y Guido! 🛞⚡");
+                    launchPistonCupConfetti();
+                }, 200);
+            }
+        }
+
+        function switchCarsGame(game) {
+            const speedGame = document.getElementById('game-speed');
+            const tiresGame = document.getElementById('game-tires');
+            const btnSpeed = document.getElementById('btn-speed-tab');
+            const btnTires = document.getElementById('btn-tires-tab');
+
+            if (game === 'speed') {
+                speedGame.classList.remove('hidden');
+                tiresGame.classList.add('hidden');
+                btnSpeed.className = "bg-mcqueenRed text-lightningYellow font-speed text-xl px-5 py-2 rounded-xl border border-lightningYellow btn-racing";
+                btnTires.className = "bg-asphaltGray text-white font-speed text-xl px-5 py-2 rounded-xl border border-gray-600 btn-racing";
+            } else {
+                speedGame.classList.add('hidden');
+                tiresGame.classList.remove('hidden');
+                btnSpeed.className = "bg-asphaltGray text-white font-speed text-xl px-5 py-2 rounded-xl border border-gray-600 btn-racing";
+                btnTires.className = "bg-mcqueenRed text-lightningYellow font-speed text-xl px-5 py-2 rounded-xl border border-lightningYellow btn-racing";
+            }
+        }
+
+        function resetCarsGames() {
+            currentKmSpeed = 0;
+            tiresChanged = 0;
+            document.getElementById('speed-bar').style.width = '0%';
+            document.getElementById('speed-text').innerText = '0 KM/H';
+            document.getElementById('rpm-status').innerText = "¡Llega a 200 KM/H para ganar la Copa Piston!";
+
+            const tiresBtns = document.querySelectorAll('.tire-btn');
+            tiresBtns.forEach(btn => {
+                btn.innerText = '⚙️';
+                btn.className = "tire-btn text-5xl md:text-6xl p-3 bg-asphaltGray rounded-full border-4 border-dashed border-yellow-500 hover:rotate-45 transition-transform active:scale-75";
+            });
+        }
+
+        const pollCarsVotes = { 1: 18, 2: 12, 3: 24 };
+        function voteCarsSong(option) {
+            if (carsPollVoted) return;
+
+            pollCarsVotes[option]++;
+            document.getElementById(`cars-poll-${option}`).innerText = `${pollCarsVotes[option]} Votos`;
+            carsPollVoted = true;
+
+            document.getElementById('poll-cars-status').classList.remove('hidden');
+
+            confetti({
+                particleCount: 25,
+                spread: 50,
+                origin: { y: 0.7 }
+            });
+        }
+
+        async function handleCarsRSVP(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.innerText = "REGISTRANDO EN PITS...";
+            submitBtn.disabled = true;
+
+            const name = document.getElementById('pilot-name').value;
+            const adults = document.getElementById('adults-cars').value;
+            const kids = document.getElementById('kids-cars').value;
+            const notes = document.getElementById('notes-cars').value;
+
+            // URL oficial de respuesta a tu Google Form
+            const FORM_ACTION_URL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLScQc0Z9xnvOjwG_H_dnflUmFvYmsNbXwqld0BmVnw588oC28g/formResponse";
+
+            // Usamos URLSearchParams para que Google Forms acepte la petición
+            const data = new URLSearchParams();
+            data.append("entry.1985949287", name); // REEMPLAZA 123456789 con el entry de Nombre
+            data.append("entry.1259206147", `${adults} Adulto(s), ${kids} Niño(s)`); // REEMPLAZA 987654321 con el entry de Cantidad
+            data.append("entry.1387870999", notes); // REEMPLAZA 456789123 con el entry de Notas
+
+            try {
+                await fetch(FORM_ACTION_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: data.toString()
+                });
+            } catch (err) {
+                console.error("Error enviando confirmación:", err);
+            }
+
+            // Desplegar animación y mensaje de éxito
+            document.getElementById('success-cars-text').innerText = 
+                `¡Hola ${name}! Tu registro en pits fue un éxito para ${adults} adulto(s) y ${kids} pequeño(s) piloto(s). ¡Nos vemos en el cumpleaños #5 de Sebastián!`;
+
+            document.getElementById('rsvp-cars-form').classList.add('hidden');
+            document.getElementById('rsvp-cars-success').classList.remove('hidden');
+
+            launchPistonCupConfetti();
+        }
+
+        function resetCarsRSVP() {
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.innerHTML = `<i class="fa-solid fa-flag-checkered text-3xl"></i> CONFIRMAR MI LUGAR EN LA PISTA`;
+            submitBtn.disabled = false;
+
+            document.getElementById('rsvp-cars-form').classList.remove('hidden');
+            document.getElementById('rsvp-cars-success').classList.add('hidden');
+        }
+
+        function openMap() {
+            window.open('https://maps.google.com/?q=Calle+66+%23+1-30+Sal%C3%B3n+Social+Altos+del+Parque+Cali', '_blank');
+        }
+
+        window.onload = function() {
+            setTimeout(revEngineAndConfetti, 600);
+        };
+    </script>
+</body>
+</html>
