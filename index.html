@@ -411,6 +411,20 @@
                 <div class="pt-4">
                     <button onclick="resetCarsRSVP()" class="text-xs text-lightningYellow underline font-bold">Editar respuesta de piloto</button>
                 </div>
+
+                <!-- REPRODUCTOR DE MÚSICA DE PISTA -->
+                <div class="fixed bottom-4 right-4 z-50">
+                    <button id="music-toggle-btn" onclick="toggleCarsMusic()" 
+                            class="bg-mcqueenRed text-lightningYellow border-2 border-lightningYellow p-3 md:p-4 rounded-full shadow-2xl flex items-center gap-2 font-speed text-lg md:text-xl btn-racing animate-pulse">
+                        <i id="music-icon" class="fa-solid fa-music text-xl"></i>
+                        <span id="music-text" class="hidden md:inline">📻 MÚSICA PITS</span>
+                    </button>
+                    <!-- Archivo de audio oculto -->
+                    <audio id="bg-cars-music" loop>
+                        <source src="./src/audio/03 Rascal Flatts - Life Is a Highway.mp3" type="audio/mpeg">
+                        Tu navegador no soporta el elemento de audio.
+                    </audio>
+                </div>
             </div>
         </section>
 
@@ -437,6 +451,14 @@
         let trophyCount = 0;
         let tiresChanged = 0;
         let carsPollVoted = false;
+
+        // Control de Música de Fondo
+        const bgMusic = document.getElementById('bg-cars-music');
+        const musicBtn = document.getElementById('music-toggle-btn');
+        const musicIcon = document.getElementById('music-icon');
+        const musicText = document.getElementById('music-text');
+        let isPlaying = false;
+
 
         // Date Set (October 03, 2026 16:00:00)
         const targetRaceDate = new Date("2026-10-03T16:00:00").getTime();
@@ -656,6 +678,43 @@
         function openMap() {
             window.open('https://maps.google.com/?q=Calle+66+%23+1-30+Sal%C3%B3n+Social+Altos+del+Parque+Cali', '_blank');
         }
+
+        function toggleCarsMusic() {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicIcon.className = "fa-solid fa-music text-xl";
+                musicText.innerText = "📻 MÚSICA PITS";
+                musicBtn.classList.add('animate-pulse');
+                musicBtn.classList.remove('bg-green-600');
+                musicBtn.classList.add('bg-mcqueenRed');
+                isPlaying = false;
+            } else {
+                bgMusic.play().then(() => {
+                    musicIcon.className = "fa-solid fa-pause text-xl";
+                    musicText.innerText = "PAUSAR MÚSICA";
+                    musicBtn.classList.remove('animate-pulse');
+                    musicBtn.classList.remove('bg-mcqueenRed');
+                    musicBtn.classList.add('bg-green-600');
+                    isPlaying = true;
+                }).catch(err => {
+                    console.error("No se pudo reproducir el audio:", err);
+                });
+            }
+        }
+
+        // Opcional: Reproducir música automáticamente cuando el usuario haga su primer clic en la página
+        document.addEventListener('click', function startAudioOnInteraction() {
+            if (!isPlaying && bgMusic) {
+                bgMusic.play().then(() => {
+                    musicIcon.className = "fa-solid fa-pause text-xl";
+                    musicText.innerText = "PAUSAR MÚSICA";
+                    musicBtn.classList.remove('animate-pulse');
+                    musicBtn.classList.remove('bg-mcqueenRed');
+                    musicBtn.classList.add('bg-green-600');
+                    isPlaying = true;
+                }).catch(() => {});
+            }
+        }, { once: true }); // Se ejecuta solo una vez al primer clic
 
         window.onload = function() {
             setTimeout(revEngineAndConfetti, 600);
